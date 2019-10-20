@@ -1,0 +1,474 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AboutApplication" xml:space="preserve">
+    <value>درباره سامانه</value>
+  </data>
+  <data name="AboutCompany" xml:space="preserve">
+    <value>درباره شرکت</value>
+  </data>
+  <data name="AppilicationVersion" xml:space="preserve">
+    <value>نسخه 1.0.0</value>
+  </data>
+  <data name="ApplicationHelp" xml:space="preserve">
+    <value>راهنمای سامانه</value>
+  </data>
+  <data name="Client_Address" xml:space="preserve">
+    <value>آدرس</value>
+  </data>
+  <data name="Client_FirstName" xml:space="preserve">
+    <value>نام کاربر</value>
+  </data>
+  <data name="Client_ID" xml:space="preserve">
+    <value>شناسه کاربر</value>
+  </data>
+  <data name="Client_LastName" xml:space="preserve">
+    <value>نام خانوادگی کاربر</value>
+  </data>
+  <data name="Client_UserName" xml:space="preserve">
+    <value>نام کاربری</value>
+  </data>
+  <data name="CMS_Name" xml:space="preserve">
+    <value>دارووری</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>ویرایش</value>
+  </data>
+  <data name="Help" xml:space="preserve">
+    <value>راهنما</value>
+  </data>
+  <data name="PageTittle_AddClient" xml:space="preserve">
+    <value>افزودن کاربر جدید</value>
+  </data>
+  <data name="PageTittle_AddStation" xml:space="preserve">
+    <value>تعریف مرکز جدید</value>
+  </data>
+  <data name="PageTittle_ContactUS" xml:space="preserve">
+    <value>جهت کسب اطلاعات بیشتر با پشتیبانی تماس حاصل فرمایید</value>
+  </data>
+  <data name="PageTittle_Dashboard" xml:space="preserve">
+    <value>داشبورد</value>
+  </data>
+  <data name="PageTittle_DetailClient" xml:space="preserve">
+    <value>جزئیات کاربر مورد نظر</value>
+  </data>
+  <data name="PageTittle_DetailStation" xml:space="preserve">
+    <value>نمایش جزئیات مرکز مورد نظر</value>
+  </data>
+  <data name="PageTittle_EditClient" xml:space="preserve">
+    <value>ویرایش مشخصات کاربر مورد نظر</value>
+  </data>
+  <data name="PageTittle_EditStation" xml:space="preserve">
+    <value>ویرایش مرکز مورد نظر</value>
+  </data>
+  <data name="PageTittle_ListClient" xml:space="preserve">
+    <value>لیست کاربران</value>
+  </data>
+  <data name="PageTittle_ListStation" xml:space="preserve">
+    <value>لیست مراکز</value>
+  </data>
+  <data name="PageTittle_ManageAccount" xml:space="preserve">
+    <value>مدیریت حساب کاربری</value>
+  </data>
+  <data name="Station_Address" xml:space="preserve">
+    <value>آدرس</value>
+  </data>
+  <data name="Station_Coordinate" xml:space="preserve">
+    <value>مختصات جغرافیایی</value>
+  </data>
+  <data name="Station_CreateDateOnUTC" xml:space="preserve">
+    <value>تاریخ ایجاد حساب</value>
+  </data>
+  <data name="Station_EditDateOnUTC" xml:space="preserve">
+    <value>تاریخ آخرین ویرایش اعمال شده</value>
+  </data>
+  <data name="Station_FirstName" xml:space="preserve">
+    <value>نام</value>
+  </data>
+  <data name="Station_ID" xml:space="preserve">
+    <value>شناسه مرکز</value>
+  </data>
+  <data name="Station_LastName" xml:space="preserve">
+    <value>نام خانوادگی</value>
+  </data>
+  <data name="Station_StationName" xml:space="preserve">
+    <value>نام مرکز</value>
+  </data>
+  <data name="Station_Status" xml:space="preserve">
+    <value>وضعیت</value>
+  </data>
+  <data name="Station_Tell" xml:space="preserve">
+    <value>تلفن</value>
+  </data>
+  <data name="Station_UserName" xml:space="preserve">
+    <value>نام کاربری</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>ثبت</value>
+  </data>
+  <data name="Unauthorized_Access_Error" xml:space="preserve">
+    <value>شما مجوز دسترسی به این بخش را ندارید</value>
+  </data>
+  <data name="View_AddStation" xml:space="preserve">
+    <value>تعریف مرکز جدید</value>
+  </data>
+  <data name="View_AreYouShure" xml:space="preserve">
+    <value>آیا اطمینان خاطر دارید ؟</value>
+  </data>
+  <data name="View_Author" xml:space="preserve">
+    <value>طراحی و توسعه دلیوری</value>
+  </data>
+  <data name="View_ClientActivityReport" xml:space="preserve">
+    <value>گزارش عملکرد کاربران</value>
+  </data>
+  <data name="View_ClientManagement" xml:space="preserve">
+    <value>مدیریت کاربران</value>
+  </data>
+  <data name="View_Close" xml:space="preserve">
+    <value>بستن</value>
+  </data>
+  <data name="View_Dashboard" xml:space="preserve">
+    <value>داشبورد</value>
+  </data>
+  <data name="View_Description" xml:space="preserve">
+    <value>پنل مدیریت دلیوری</value>
+  </data>
+  <data name="View_EditStation" xml:space="preserve">
+    <value>ویرایش مرکز </value>
+  </data>
+  <data name="View_ListClient" xml:space="preserve">
+    <value>لیست کاربران</value>
+  </data>
+  <data name="View_ListStation" xml:space="preserve">
+    <value>لیست مراکز</value>
+  </data>
+  <data name="View_MainNavigation_Tittle" xml:space="preserve">
+    <value>منوی مدیریت</value>
+  </data>
+  <data name="View_Report" xml:space="preserve">
+    <value>گزارشگیری</value>
+  </data>
+  <data name="View_StationActivityReport" xml:space="preserve">
+    <value>گزارش عملکرد مراکز</value>
+  </data>
+  <data name="View_StationManagement" xml:space="preserve">
+    <value>مدیریت مراکز</value>
+  </data>
+  <data name="View_Tittle" xml:space="preserve">
+    <value>پنل مدیریت</value>
+  </data>
+  <data name="View_ValidationError" xml:space="preserve">
+    <value>فیلد مورد نظر را تکمیل کنید</value>
+  </data>
+  <data name="View_Yes" xml:space="preserve">
+    <value>بلی</value>
+  </data>
+  <data name="Client_Tell" xml:space="preserve">
+    <value>شماره تماس کاربر</value>
+  </data>
+  <data name="Client_CreateDateOnUTC" xml:space="preserve">
+    <value>زمان ثبت کاربر</value>
+  </data>
+  <data name="Client_EditDateOnUTC" xml:space="preserve">
+    <value>زمان آخرین ویرایش مشخصات کاربر</value>
+  </data>
+  <data name="Client_Status" xml:space="preserve">
+    <value>وضعیت کاربر</value>
+  </data>
+  <data name="PageTittle_StationResponse" xml:space="preserve">
+    <value>گزارش عملکرد مراکز</value>
+  </data>
+  <data name="PageTittle_StationResponseDetail" xml:space="preserve">
+    <value>گزارش جزئیات عملکرد مرکز مورد نظر</value>
+  </data>
+  <data name="PageTittle_RequestManagement" xml:space="preserve">
+    <value>مدیریت درخواست ها</value>
+  </data>
+  <data name="RequestManagment_Address" xml:space="preserve">
+    <value>آدرس درخواست ارسالی</value>
+  </data>
+  <data name="RequestManagment_CreatedDateOnUtc" xml:space="preserve">
+    <value>تاریخ ثبت درخواست</value>
+  </data>
+  <data name="RequestManagment_Img" xml:space="preserve">
+    <value>تصویر درخواست</value>
+  </data>
+  <data name="RequestManagment_TrackingCode" xml:space="preserve">
+    <value>کد پیگیری</value>
+  </data>
+  <data name="View_RequestManagement" xml:space="preserve">
+    <value>مدیریت درخواست ها</value>
+  </data>
+  <data name="View_AreYouShureToAccept" xml:space="preserve">
+    <value>آیا اطمینان خاطر دارید که درخواست را تایید کنید ؟</value>
+  </data>
+  <data name="View_AreYouShureToReject" xml:space="preserve">
+    <value>آیا اطمینان خاطر دارید که درخواست را رد کنید ؟</value>
+  </data>
+  <data name="RequestManagment_Price" xml:space="preserve">
+    <value>قیمت پیشنهادی</value>
+  </data>
+  <data name="View_AreYouShureToPay" xml:space="preserve">
+    <value>آیا از پرداخت مبلغ اطمینان خاطر دارید ؟</value>
+  </data>
+  <data name="RequestManagment_Status" xml:space="preserve">
+    <value>وضعیت تایید کاربر</value>
+  </data>
+  <data name="RequestManagment_RejectDateOnUtc" xml:space="preserve">
+    <value>تاریخ رد درخواست</value>
+  </data>
+  <data name="RequestManagment_ClientResponseDateOnUTC" xml:space="preserve">
+    <value>زمان پاسخ کاربر </value>
+  </data>
+  <data name="RequestManagment_ProcessingDateOnUTC" xml:space="preserve">
+    <value>زمان پردازش درخواست</value>
+  </data>
+  <data name="RequestManagment_ResponseIssue" xml:space="preserve">
+    <value>توضیحات مرکز در خصوص سفارش</value>
+  </data>
+  <data name="RequestManagment_SeenDateOnUTC" xml:space="preserve">
+    <value>زمان مشاهده درخواست توسط اپراتور</value>
+  </data>
+  <data name="RequestManagment_WaitingForClientDateOnUTC" xml:space="preserve">
+    <value>زمان انتظار برای پاسخ کاربر</value>
+  </data>
+  <data name="RequestManagment_Coordinates" xml:space="preserve">
+    <value>محل جغرافیای مرکز</value>
+  </data>
+  <data name="RequestManagment_IsSetted" xml:space="preserve">
+    <value>وضعیت پرداخت</value>
+  </data>
+  <data name="RequestManagment_RequestCreatedDateOnUtc" xml:space="preserve">
+    <value>زمان ایجاد درخواست</value>
+  </data>
+  <data name="DeliveryManagment_DeliveryCreateDateOnUtc" xml:space="preserve">
+    <value>زمان ورود به سیستم ارسال سفارش</value>
+  </data>
+  <data name="DeliveryManagment_DeliveryIssue" xml:space="preserve">
+    <value>توضیحات سیستم ارسال سفارش</value>
+  </data>
+  <data name="DeliveryManagment_DeliverySeenDateOnUTC" xml:space="preserve">
+    <value>زمان رویت سفارش در سیستم ارسال سفارش</value>
+  </data>
+  <data name="DeliveryManagment_NuncioAddress" xml:space="preserve">
+    <value>آدرس مرکز پیک</value>
+  </data>
+  <data name="DeliveryManagment_NuncioAtClientDateOnUTC" xml:space="preserve">
+    <value>زمان تحویل سفارش به پیک توسط مشتری</value>
+  </data>
+  <data name="DeliveryManagment_NuncioAtStationDateOnUTC" xml:space="preserve">
+    <value>زمان حضور پیک در مرکز ارسال سفارش</value>
+  </data>
+  <data name="DeliveryManagment_NuncioName" xml:space="preserve">
+    <value>نام مرکز پیک</value>
+  </data>
+  <data name="DeliveryManagment_NuncioOwnerCompleteName" xml:space="preserve">
+    <value>نام و نام خانوادگی پیک</value>
+  </data>
+  <data name="DeliveryManagment_NuncioTell" xml:space="preserve">
+    <value>شماره تماس پیک</value>
+  </data>
+  <data name="DeliveryManagment_SendNuncioDateOnUTC" xml:space="preserve">
+    <value>زمان تحویل سفارش به پیک</value>
+  </data>
+  <data name="RequestManagment_RequestId" xml:space="preserve">
+    <value>شناسه سفارش</value>
+  </data>
+  <data name="View_SingleStationActivityReport" xml:space="preserve">
+    <value>گزارش عملکرد مرکز</value>
+  </data>
+  <data name="Find" xml:space="preserve">
+    <value>پیدا کن</value>
+  </data>
+  <data name="PageTittle_ClientActivityReport" xml:space="preserve">
+    <value>پیگیری سفارش کاربران</value>
+  </data>
+  <data name="PageTittle_FindClient" xml:space="preserve">
+    <value>یافتن کاربر</value>
+  </data>
+  <data name="PageTittle_SingleStationResponse" xml:space="preserve">
+    <value>گزارش عملکرد مرکز</value>
+  </data>
+  <data name="Delivery_Address" xml:space="preserve">
+    <value>آدرس مقصد جهت ارسال سفارش</value>
+  </data>
+  <data name="Delivery_DeliveryIssue" xml:space="preserve">
+    <value>توضیحات ارسال</value>
+  </data>
+  <data name="Delivery_ID" xml:space="preserve">
+    <value>شناسه</value>
+  </data>
+  <data name="Delivery_Img" xml:space="preserve">
+    <value>تصویر سفارش</value>
+  </data>
+  <data name="Delivery_TrackingCode" xml:space="preserve">
+    <value>کد پیگیری سفارش</value>
+  </data>
+  <data name="Delivery_CreatedDateOnUTC" xml:space="preserve">
+    <value>زمان ارجاع سفارش</value>
+  </data>
+  <data name="View_DeliveryList" xml:space="preserve">
+    <value>لیست ارسال ها</value>
+  </data>
+  <data name="Ticket_ReplySend" xml:space="preserve">
+    <value>ثبت و ارسال</value>
+  </data>
+  <data name="PageTittle_DeliveryList" xml:space="preserve">
+    <value>لیست ارسال ها</value>
+  </data>
+  <data name="PageTittle_DeliveryDetail" xml:space="preserve">
+    <value>جزئیات ارسال مورد نظر</value>
+  </data>
+  <data name="Delivery_NuncioName" xml:space="preserve">
+    <value>نام مرکز پیک</value>
+  </data>
+  <data name="Delivery_NuncioOwnerName" xml:space="preserve">
+    <value>نام و نام خانوادگی پیک</value>
+  </data>
+  <data name="Delivery_DeliveryCreateDateOnUtc" xml:space="preserve">
+    <value>زمان ورود به سیستم ارسال سفارش</value>
+  </data>
+  <data name="Delivery_DeliverySeenDateOnUTC" xml:space="preserve">
+    <value>زمان رویت ارسال</value>
+  </data>
+  <data name="Delivery_NuncioAddress" xml:space="preserve">
+    <value>آدرس پیک</value>
+  </data>
+  <data name="Delivery_NuncioAtClientDateOnUTC" xml:space="preserve">
+    <value>زمان دریافت سفارش توسط مشتری</value>
+  </data>
+  <data name="Delivery_NuncioAtStationDateOnUTC" xml:space="preserve">
+    <value>زمان حضور پیک در مرکز</value>
+  </data>
+  <data name="Delivery_NuncioTell" xml:space="preserve">
+    <value>شماره تماس پیک</value>
+  </data>
+  <data name="Delivery_SendNuncioDateOnUTC" xml:space="preserve">
+    <value>زمان ارسال پیک</value>
+  </data>
+  <data name="StationsResponsibilaty" xml:space="preserve">
+    <value>میزان پاسخ گویی مراکز به درخواست ها</value>
+  </data>
+  <data name="RequestManagment_ClientStatus" xml:space="preserve">
+    <value>وضعیت تایید کاربر</value>
+  </data>
+  <data name="RequestManagment_StationStatus" xml:space="preserve">
+    <value>وضعیت تایید مرکز</value>
+  </data>
+</root>

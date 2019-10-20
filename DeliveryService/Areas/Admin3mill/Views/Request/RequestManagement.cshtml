@@ -1,0 +1,196 @@
+﻿@model PagedList.IPagedList<DeliveryService.Models.RequestManagementModel>
+@using PagedList.Mvc;
+@{
+    Layout = "~/Areas/Admin3mill/Views/Shared/_Layout.cshtml";
+}
+@section CSS_Requested{
+    <link href="~/Content/AdminContent/vendor/sweetalert/sweet-alert.css" rel="stylesheet" media="screen">
+    <link href="~/Content/AdminContent/vendor/sweetalert/ie9.css" rel="stylesheet" media="screen">
+    <link href="~/Content/AdminContent/vendor/toastr/toastr.min.css" rel="stylesheet" media="screen">
+    <link href="~/Content/AdminContent/vendor/select2/select2.min.css" rel="stylesheet" media="screen">
+    <link href="~/Content/AdminContent/vendor/DataTables/css/DT_bootstrap.css" rel="stylesheet" media="screen">
+
+}
+@section js_Requested{
+    <script src="~/Content/AdminContent/vendor/sweetalert/sweet-alert.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/toastr/toastr.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/select2/select2.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/DataTables/jquery.dataTables.min.js"></script>
+
+}
+@section js_Handler
+{
+    <script src="~/Content/AdminContent/assets/js/ui-notifications.js"></script>
+    <script src="~/Content/AdminContent/assets/js/table-data.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            Main.init();
+            TableData.init();
+            UINotifications.init("@ViewBag.jsNotifyMessage");
+        });
+
+        $("a[id^='PipoModalLink_']").click('action', function () {
+            var temp = $(this).attr('id').split("_");
+            var myid = temp[1];
+            var mysid = temp[2];
+            $("#PipoModalBody").empty();
+            $("#PipoModalBody").append('<p> @Resource.Resource.View_AreYouShureToAccept');
+            var $self = $("#PipoModalForm");
+            $self.attr('action', '/Admin3mill/Request/AcceptRequest?RequestId=' +myid+"&StationId="+mysid+"&Page="+@ViewBag.Pagination);
+        });
+
+        $("a[id^='PipoModalLink2_']").click('action', function () {
+            var temp2 = $(this).attr('id').split("_");
+            var myid2 = temp2[1];
+            var mysid2 = temp2[2];
+            $("#PipoModalBody2").empty();
+            $("#PipoModalBody2").append('<p> @Resource.Resource.View_AreYouShureToReject');
+            var $self = $("#PipoModalForm2");
+            $self.attr('action', '/Admin3mill/Request/RejectRequest?RequestId=' + myid2+"&StationId="+mysid2+"&Page="+@ViewBag.Pagination);
+        });
+
+    </script>
+}
+@{
+    string color = "";
+}
+<div class="main-content">
+    <div class="wrap-content container" id="container">
+        <!-- start: PAGE TITLE -->
+        @Html.Partial("PageTittle")
+        <!-- end: PAGE TITLE -->
+        <!-- start: DYNAMIC TABLE -->
+        <div class="container-fluid container-fullw bg-white">
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-hover" id="sample-table-2">
+                        <thead>
+                            <tr>
+                                <th>@Html.DisplayName(Resource.Resource.RequestManagment_Img)</th>
+                                <th>@Html.DisplayName(Resource.Resource.RequestManagment_TrackingCode)</th>
+                                <th>@Html.DisplayName(Resource.Resource.RequestManagment_CreatedDateOnUtc)</th>
+                                <th class="center"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                if (item.Status == "1")
+                                { color = "#7fc87f"; }
+                                else if (item.RejectDateOnUtc != null)
+                                { color = "#efb7b7"; }
+                                else
+                                { color = "#eeefb7"; }
+                                <tr style="background-color:@color">
+                                    <td><a onclick="window.open('@item.Img','mywin','width=1000,height =800')"><img src="@item.Img" class="img-rounded" alt="image" style="height:60px;width:60px;"></a></td>
+                                    <td>@item.TrackingCode</td>
+                                    <td style="direction: ltr;text-align:right;">@DeliveryService.Areas.Admin3mill.Models.Tools.GetDateTimeReturnJalaliDate(item.CreateDateOnUtc)</td>
+                                    <td>
+                                        @if (item.RejectDateOnUtc != null)
+                                        {
+                                            <span>رد شده</span>
+                                        }
+                                        else if (item.Status == "3")
+                                        {
+                                            <a id="PipoModalLink_@item.RequestId _@item.F_StationId" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="تایید سفارش"><i class="fa fa-check-circle fa-white" data-toggle="modal" data-target="#PipoModal"></i></a>
+                                            <a id="PipoModalLink2_@item.RequestId _@item.F_StationId" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="رد سفارش"><i class="fa fa-times-circle" data-toggle="modal" data-target="#PipoModal2"></i></a>
+                                        }
+                                        else if (item.Status == "1")
+                                        {
+                                            <span> تایید شده</span>
+                                        }
+                                    </td>
+
+
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5 margin-right-20"></div>
+                <div class="col-md-4 margin-right-30">
+                    <div class="pagination pagination-green margin-bottom-10 center">
+                        صفحه @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) از @Model.PageCount
+                        @Html.PagedListPager(Model, page => Url.Action("RequestManagement", "Request", new { page, stationId = ViewBag.StationId }))
+                    </div>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+        </div>
+        <!-- end: DYNAMIC TABLE -->
+        @*Default Modal*@
+        <div class="modal fade" id="PipoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <h4 class="modal-title center" id="myModalLabel">
+                            <img src="~/Content/AdminContent/z3mill/alert-icon.png" alt="Alert" height="81" width="90" />
+                        </h4>
+                    </div>
+                    <div id="PipoModalBody" class="modal-body">
+                        @Resource.Resource.View_AreYouShureToAccept
+                    </div>
+                    @using (Html.BeginForm("AcceptRequest", "Request", new { RequestId = 3, StationId = 2, Page = ViewBag.PaginationCount }, FormMethod.Post, new { Id = "PipoModalForm" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="note-editor">
+                            @Html.TextArea("ResponseIssue", new { style = "padding: 0 15px;", @class = "form-control autosize area-animated FixedColTextArea", placeholder = "متن پاسخ درخواست" })
+                        </div>
+                        @Html.TextBox("Price", new { Price = 5000 }, new { style = "padding: 0 15px;margin-top:10px;", @class = "form-control autosize area-animated", placeholder = "قیمت پیشنهادی ...", type = "number", min = "0" })
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary btn-o" data-dismiss="modal">
+                                @Resource.Resource.View_Close
+                            </button>
+                            <button type="submit" class="btn btn-danger">
+                                @Resource.Resource.View_Yes
+                            </button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        @*/Default Modal*@
+
+        @*Default Modal2*@
+        <div class="modal fade" id="PipoModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <h4 class="modal-title center" id="myModalLabel">
+                            <img src="~/Content/AdminContent/z3mill/alert-icon.png" alt="Alert" height="81" width="90" />
+                        </h4>
+                    </div>
+                    <div id="PipoModalBody" class="modal-body">
+                        @Resource.Resource.View_AreYouShureToReject
+                    </div>
+                    @using (Html.BeginForm("RejectRequest", "Request", new { RequestId = 3, StationId = 2, Page = ViewBag.PaginationCount }, FormMethod.Post, new { Id = "PipoModalForm2" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="note-editor">
+                            @Html.TextArea("ResponseIssue", new { style = "padding: 0 15px;", @class = "form-control autosize area-animated FixedColTextArea", placeholder = "متن پاسخ درخواست" })
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary btn-o" data-dismiss="modal">
+                                @Resource.Resource.View_Close
+                            </button>
+                            <button type="submit" class="btn btn-danger">
+                                @Resource.Resource.View_Yes
+                            </button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        @*/Default Modal2*@
+
+    </div>
+</div>

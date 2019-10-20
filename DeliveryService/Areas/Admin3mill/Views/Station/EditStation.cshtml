@@ -1,0 +1,182 @@
+﻿@model DeliveryService.Models.StationModel
+@{
+    Layout = "~/Areas/Admin3mill/Views/Shared/_Layout.cshtml";
+}
+@section CSS_Requested{
+
+    <link href="~/Content/AdminContent/vendor/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet" media="screen">
+    <link href="~/Content/AdminContent/vendor/select2/select2.min.css" rel="stylesheet" media="screen">
+    <link href="~/Content/AdminContent/vendor/bootstrap-datepicker/bootstrap-datepicker3.standalone.min.css" rel="stylesheet" media="screen">
+    <link href="~/Content/AdminContent/vendor/bootstrap-timepicker/bootstrap-timepicker.min.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" />
+    <link rel="stylesheet" href="~/Content/AdminContent/z3mill/main.css">
+    <link href="~/Content/AdminContent/vendor/ladda-bootstrap/ladda-themeless.min.css" rel="stylesheet" media="screen">
+    <link href="~/Content/AdminContent/vendor/sweetalert/sweet-alert.css" rel="stylesheet" media="screen">
+    <link href="~/Content/AdminContent/vendor/sweetalert/ie9.css" rel="stylesheet" media="screen">
+    <link href="~/Content/AdminContent/vendor/toastr/toastr.min.css" rel="stylesheet" media="screen">
+
+}
+@section js_Requested
+{
+    <script src="~/Content/AdminContent/vendor/maskedinput/jquery.maskedinput.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/autosize/autosize.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/selectFx/classie.js"></script>
+    <script src="~/Content/AdminContent/vendor/selectFx/selectFx.js"></script>
+    <script src="~/Content/AdminContent/vendor/select2/select2.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/ladda-bootstrap/spin.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/ladda-bootstrap/ladda.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/sweetalert/sweet-alert.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/toastr/toastr.min.js"></script>
+}
+
+@section js_Handler
+{
+    <script src="~/Content/AdminContent/assets/js/form-elements.js"></script>
+    <script src="~/Content/AdminContent/assets/js/ui-buttons.js"></script>
+    <script src="~/Content/AdminContent/assets/js/ui-notifications.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAigjOSg1VbxQCNeFkQdDxf5t0-2ubADd4&callback=myMap"></script>
+    <script>
+        jQuery(document).ready(function () {
+            Main.init();
+            FormElements.init();
+            UIButtons.init();
+            UINotifications.init("@ViewBag.jsNotifyMessage");
+        });
+        @{string Coordinate=Model.Coordinates;}
+        function myMap() {
+            var myCenter = new google.maps.LatLng(@Coordinate.Substring(0,Coordinate.IndexOf(',')), @Coordinate.Substring(Coordinate.IndexOf(',')+1));
+            var mapCanvas = document.getElementById("PipoMap");
+            var mapOptions = { center: myCenter, zoom: 14 };
+            var map = new google.maps.Map(mapCanvas, mapOptions);
+            var marker = new google.maps.Marker({ position: myCenter });
+            google.maps.event.addListener(map, 'click', function (e) {
+                var x = e.latLng.lat();
+                var y = e.latLng.lng();
+                var PipoCoordinate = document.getElementById("PipoCoordinate");
+                PipoCoordinate.value = x + ',' + y;
+                if (marker != null) {
+                    marker.setMap(null);
+                }
+                marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(x, y),
+                    map: map
+                });
+            });
+            marker.setMap(map);
+        }
+    </script>
+}
+<div class="main-content">
+    <div class="wrap-content container" id="container">
+        <!-- start: PAGE TITLE -->
+        @Html.Partial("PageTittle")
+        <!-- end: PAGE TITLE -->
+        <!-- start: BASIC EXAMPLE -->
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(u => u.F_UserId)
+            @Html.HiddenFor(u => u.ID)
+            <div class="container-fluid container-fullw bg-white">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row margin-top-30">
+                            <div class="col-lg-6 col-md-12">
+                                <fieldset>
+                                    <legend>
+                                        اطلاعات حساب کاربری مرکز<span class="symbol required"></span>
+                                    </legend>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">
+                                            @Html.DisplayNameFor(model => model.OldPassword)
+                                        </label>
+                                        @Html.TextBoxFor(model => model.OldPassword, new { @class = "form-control", @id = "exampleInputEmail1", @placeholder = "رمز عبور را وارد کنید", @type = "password" })
+                                        @Html.ValidationMessageFor(model => model.OldPassword)
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">
+                                            @Html.DisplayNameFor(model => model.NewPassword)
+                                        </label>
+                                        @Html.TextBoxFor(model => model.NewPassword, new { @class = "form-control", @id = "exampleInputEmail1", @placeholder = "تکرار رمز عبور را وارد کنید", @type = "password" })
+                                        @Html.ValidationMessageFor(model => model.NewPassword)
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">
+                                            @Html.DisplayNameFor(model => model.ConfirmNewPassword)
+                                        </label>
+                                        @Html.TextBoxFor(model => model.ConfirmNewPassword, new { @class = "form-control", @id = "exampleInputEmail1", @placeholder = "تکرار رمز عبور را وارد کنید", @type = "password" })
+                                        @Html.ValidationMessageFor(model => model.ConfirmNewPassword)
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">
+                                            @Html.DisplayNameFor(model => model.Coordinates)
+                                        </label>
+                                        @Html.TextBoxFor(model => model.Coordinates, new { @class = "form-control", @placeholder = "مختصات را وارد کنید", @type = "text", style = "direction:ltr;",id="PipoCoordinate" })
+                                        <div class="col-lg-12 col-md-12" id="PipoMap" style="height:200px;"></div>
+                                        @Html.ValidationMessageFor(model => model.Coordinates)
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-6 col-md-12">
+                                <fieldset>
+                                    <legend>
+                                        مشخصات مرکز<span class="symbol required"></span>
+                                    </legend>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">
+                                            @Html.DisplayNameFor(model => model.FirstName)
+                                        </label>
+
+                                        @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", @id = "exampleInputEmail1", @placeholder = "نام را وارد کنید", @type = "text" })
+                                        @Html.ValidationMessageFor(model => model.FirstName)
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">
+                                            @Html.DisplayNameFor(model => model.LastName)
+                                        </label>
+                                        @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", @id = "exampleInputEmail1", @placeholder = "نام خانوادگی را وارد کنید", @type = "text" })
+                                        @Html.ValidationMessageFor(model => model.LastName)
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">
+                                            @Html.DisplayNameFor(model => model.StationName)
+                                        </label>
+                                        @Html.TextBoxFor(model => model.StationName, new { @class = "form-control", @id = "exampleInputEmail1", @placeholder = "نام مرکز را وارد کنید", @type = "text" })
+                                        @Html.ValidationMessageFor(model => model.StationName)
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">
+                                            @Html.DisplayNameFor(model => model.Tell)
+                                        </label>
+                                        <div class="input-group">
+                                            @Html.TextBoxFor(model => model.Tell, new { @class = "form-control input-mask-phone mypipostyle", Id = "form-fieldt-mask-2", placeholder = " (9**) ***-**** شماره همراه", style = "direction:ltr;text-align:right;" })
+                                            <span class="input-group-addon"> <i class="fa fa-phone"></i> </span>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Tell)
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">
+                                            @Html.DisplayNameFor(model => model.Address)
+                                        </label>
+                                        @Html.TextBoxFor(model => model.Address, new { @class = "form-control", @id = "form-field-22", @placeholder = "آدرس را وارد کنید", @type = "text" })
+                                        @Html.ValidationMessageFor(model => model.Address)
+                                    </div>
+                                </fieldset>
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-wide btn-dark-green ladda-button " style="width:100%;" data-style="zoom-in" id="PipoSubmit">
+                                        <span class="ladda-label">@Resource.Resource.Edit</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>

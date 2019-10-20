@@ -1,0 +1,106 @@
+﻿@model PagedList.IPagedList<DeliveryService.Models.RequestManagementModel>
+@using PagedList.Mvc;
+@{
+    Layout = "~/Areas/Admin3mill/Views/Shared/_Layout.cshtml";
+}
+@section CSS_Requested{
+    <link href="~/Content/AdminContent/vendor/sweetalert/sweet-alert.css" rel="stylesheet" media="screen">
+    <link href="~/Content/AdminContent/vendor/sweetalert/ie9.css" rel="stylesheet" media="screen">
+    <link href="~/Content/AdminContent/vendor/toastr/toastr.min.css" rel="stylesheet" media="screen">
+    <link href="~/Content/AdminContent/vendor/select2/select2.min.css" rel="stylesheet" media="screen">
+    <link href="~/Content/AdminContent/vendor/DataTables/css/DT_bootstrap.css" rel="stylesheet" media="screen">
+
+}
+@section js_Requested{
+    <script src="~/Content/AdminContent/vendor/sweetalert/sweet-alert.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/toastr/toastr.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/select2/select2.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/DataTables/jquery.dataTables.min.js"></script>
+
+}
+@section js_Handler
+{
+    <script src="~/Content/AdminContent/assets/js/ui-notifications.js"></script>
+    <script src="~/Content/AdminContent/assets/js/table-data.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            Main.init();
+            TableData.init();
+            UINotifications.init("@ViewBag.jsNotifyMessage");
+        });
+    </script>
+}
+@{
+    string color = "";
+}
+<div class="main-content">
+    <div class="wrap-content container" id="container">
+        <!-- start: PAGE TITLE -->
+        @Html.Partial("PageTittle")
+        <!-- end: PAGE TITLE -->
+        <!-- start: DYNAMIC TABLE -->
+        <div class="container-fluid container-fullw bg-white">
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-hover" id="sample-table-2">
+                        <thead>
+                            <tr>
+                                <th class="center">@Html.DisplayName(Resource.Resource.RequestManagment_Img)</th>
+                                <th class="center">@Html.DisplayName(Resource.Resource.RequestManagment_TrackingCode)</th>
+                                <th class="center">@Html.DisplayName(Resource.Resource.RequestManagment_Price)</th>
+                                <th class="center">@Html.DisplayName(Resource.Resource.RequestManagment_CreatedDateOnUtc)</th>
+                                <th class="center">@Html.DisplayName(Resource.Resource.RequestManagment_Status)</th>
+                                <th class="center"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                if (item.Status == "1")
+                                { color = "#7fc87f"; }
+                                else if (item.Status == "2")
+                                { color = "#efb7b7"; }
+                                else
+                                { color = "#eeefb7"; }
+                                <tr style="background-color:@color">
+                                    <td class="center"><img src="@item.Img" class="img-rounded" alt="image" style="height:60px;width:60px;"></td>
+                                    <td class="center">@item.TrackingCode</td>
+                                    <td class="center">@item.Price</td>
+                                    <td class="center" style="direction: ltr;">@DeliveryService.Areas.Admin3mill.Models.Tools.GetDateTimeReturnJalaliDate(item.CreateDateOnUtc)</td>
+                                    <td class="center">
+                                        @if (item.Status == "2")
+                                        {
+                                            <span>رد شده</span>
+                                        }
+                                        else if (item.Status == "3")
+                                        {
+                                            <span>درحال بررسی</span>
+                                        }
+                                        else if (item.Status == "1")
+                                        {
+                                            <span> تایید شده</span>
+                                        }
+                                    </td>
+                                    <td class="center">
+                                        <a href="@Url.Action("ClientRequestDetail", "Report", new { RequestId = item.RequestId, UserName = ViewBag.UserName, page = ViewBag.Pagination })" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="جزئیات سفارش"><i class="fa fa fa-info-circle"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5 margin-right-20"></div>
+                <div class="col-md-4 margin-right-30">
+                    <div class="pagination pagination-green margin-bottom-10 center">
+                        صفحه @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) از @Model.PageCount
+                        @Html.PagedListPager(Model, page => Url.Action("ClientActivityReport", "Report", new { page, UserName = ViewBag.UserName }))
+                    </div>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+        </div>
+        <!-- end: DYNAMIC TABLE -->
+    </div>
+</div>

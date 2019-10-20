@@ -1,0 +1,152 @@
+﻿@model DeliveryService.Models.StationModel
+@{
+    Layout = "~/Areas/Admin3mill/Views/Shared/_Layout.cshtml";
+}
+@section CSS_Requested{
+
+    <link href="~/Content/AdminContent/vendor/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet" media="screen">
+    <link href="~/Content/AdminContent/vendor/select2/select2.min.css" rel="stylesheet" media="screen">
+    <link href="~/Content/AdminContent/vendor/bootstrap-datepicker/bootstrap-datepicker3.standalone.min.css" rel="stylesheet" media="screen">
+    <link href="~/Content/AdminContent/vendor/bootstrap-timepicker/bootstrap-timepicker.min.css" rel="stylesheet" media="screen">
+
+
+}
+@section js_Requested
+{
+    <script src="~/Content/AdminContent/vendor/maskedinput/jquery.maskedinput.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/autosize/autosize.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/selectFx/classie.js"></script>
+    <script src="~/Content/AdminContent/vendor/selectFx/selectFx.js"></script>
+    <script src="~/Content/AdminContent/vendor/select2/select2.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/Chart.js/Chart.min.js"></script>
+
+}
+
+@section js_Handler
+{
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAigjOSg1VbxQCNeFkQdDxf5t0-2ubADd4&callback=myMap"></script>
+    <script>
+        jQuery(document).ready(function () {
+            Main.init();
+        });
+        @{string Coordinate=Model.Coordinates;}
+        function myMap() {
+            var myCenter = new google.maps.LatLng(@Coordinate.Substring(0,Coordinate.IndexOf(',')), @Coordinate.Substring(Coordinate.IndexOf(',')+1));
+            var mapCanvas = document.getElementById("PipoMap");
+            var mapOptions = { center: myCenter, zoom: 14 };
+            var map = new google.maps.Map(mapCanvas, mapOptions);
+            var marker = new google.maps.Marker({ position: myCenter });
+            marker.setMap(map);
+        }
+    </script>
+}
+<div class="main-content">
+    <div class="wrap-content container" id="container">
+        <!-- start: PAGE TITLE -->
+        @Html.Partial("PageTittle")
+        <!-- end: PAGE TITLE -->
+        <!-- start: BASIC EXAMPLE -->
+        <div class="container-fluid container-fullw bg-white">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row margin-top-30">
+                        <div class="col-lg-6 col-md-12">
+                            <fieldset>
+                                <legend>
+                                    اطلاعات مرکز
+                                </legend>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">
+                                        @Html.DisplayNameFor(model => model.ID):
+                                        @Html.DisplayFor(model => model.ID)
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">
+                                        @Html.DisplayNameFor(model => model.UserName):
+                                        @Html.DisplayFor(model => model.UserName)
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">
+                                        @Html.DisplayNameFor(model => model.StationName):
+                                        @Html.DisplayFor(model => model.StationName)
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">
+                                        @Html.DisplayNameFor(model => model.CreateDateOnUTC):
+                                        @Html.Label(DeliveryService.Areas.Admin3mill.Models.Tools.GetDateTimeReturnJalaliDate(Model.CreateDateOnUTC), new { style = "direction: ltr;" })
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">
+                                        @Html.DisplayNameFor(model => model.EditDateOnUTC):
+                                        @if (Model.EditDateOnUTC.ToShortDateString() != "1/1/0001")
+                                        {
+                                            @Html.Label(DeliveryService.Areas.Admin3mill.Models.Tools.GetDateTimeReturnJalaliDate(Model.EditDateOnUTC), new { style = "direction: ltr;" })
+                                        }
+                                        else
+                                        {
+                                            @Html.Label("تاکنون ویرایش نشده !")
+                                        }
+                                    </label>
+                                </div>
+                            </fieldset>
+                        </div>
+
+                        <div class="col-lg-6 col-md-12">
+                            <fieldset>
+                                <legend>
+                                    اطلاعات مدیریت مرکز
+                                </legend>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">
+                                        @Html.DisplayNameFor(model => model.FirstName):
+                                        @Html.DisplayFor(model => model.FirstName)
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">
+                                        @Html.DisplayNameFor(model => model.LastName):
+                                        @Html.DisplayFor(model => model.LastName)
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">
+                                        @Html.DisplayNameFor(model => model.Tell):
+                                        @Html.Label(Model.Tell, new { style = "direction: ltr;" })
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">
+                                        @Html.DisplayNameFor(model => model.Address):
+                                        @Html.DisplayFor(model => model.Address)
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">
+                                        @Html.DisplayNameFor(model => model.Status):
+                                        @Html.DisplayFor(model => model.Status)
+                                    </label>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-12 col-md-12">
+                            <fieldset>
+                                <legend>
+                                    موقعیت جغرافیایی مرکز
+                                </legend>
+                                <div id="PipoMap" style="height:400px;"></div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end: BASIC TABLE -->
+    </div>
+</div>

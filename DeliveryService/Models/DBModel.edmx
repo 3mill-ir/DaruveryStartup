@@ -1,0 +1,564 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DeliveryDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar(max)" />
+          <Property Name="LastName" Type="nvarchar(max)" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="CreatedDateOnUTC" Type="datetime" />
+          <Property Name="EditedDateOnUTC" Type="datetime" />
+          <Property Name="isDeleted" Type="bit" />
+          <Property Name="F_userId" Type="nvarchar" MaxLength="128" />
+          <Property Name="RndValue" Type="nchar" MaxLength="6" />
+          <Property Name="AndroidId" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Delivery">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="StationResponse" Type="nvarchar(max)" />
+          <Property Name="NuncioResponse" Type="nvarchar(max)" />
+          <Property Name="F_NuncioId" Type="int" />
+          <Property Name="F_StationId" Type="int" />
+          <Property Name="CreatedDateOnUTC" Type="datetime" />
+          <Property Name="SeenDateOnUTC" Type="datetime" />
+          <Property Name="SendNuncioDateOnUTC" Type="datetime" />
+          <Property Name="NuncioAtStationDateOnUTC" Type="datetime" />
+          <Property Name="NuncioAtClientDateOnUTC" Type="datetime" />
+          <Property Name="DeliveryIssue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Nuncio">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar(max)" />
+          <Property Name="LastName" Type="nvarchar(max)" />
+          <Property Name="NuncioName" Type="nvarchar(max)" />
+          <Property Name="Tell" Type="nvarchar(max)" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="Coordinates" Type="nvarchar(max)" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="CreateddateOnUTC" Type="datetime" />
+          <Property Name="EditDateOnUTC" Type="datetime" />
+          <Property Name="isDeleted" Type="bit" />
+          <Property Name="F_UserId" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Image" Type="nvarchar(max)" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="Coordinates" Type="nvarchar(max)" />
+          <Property Name="Status" Type="nvarchar(max)" />
+          <Property Name="CreatedDateOnUTC" Type="datetime" />
+          <Property Name="isDeleted" Type="bit" />
+          <Property Name="Price" Type="float" />
+          <Property Name="F_ClientId" Type="int" />
+          <Property Name="TrackingCode" Type="nvarchar(max)" />
+          <Property Name="isSetteld" Type="bit" />
+        </EntityType>
+        <EntityType Name="Response">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StationResponse" Type="nvarchar(max)" />
+          <Property Name="ClientResponse" Type="nvarchar(max)" />
+          <Property Name="F_StationId" Type="int" />
+          <Property Name="F_RequestId" Type="int" />
+          <Property Name="CreatedDateOnUTC" Type="datetime" />
+          <Property Name="SeenDateOnUTC" Type="datetime" />
+          <Property Name="ProcessingDateOnUTC" Type="datetime" />
+          <Property Name="WaitingForClientDateOnUTC" Type="datetime" />
+          <Property Name="ClientResponseDateOnUTC" Type="datetime" />
+          <Property Name="StationRejectDateOnUTC" Type="datetime" />
+          <Property Name="ResponseIssue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Station">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar(max)" />
+          <Property Name="LastName" Type="nvarchar(max)" />
+          <Property Name="StaionName" Type="nvarchar(max)" />
+          <Property Name="Tell" Type="nvarchar(max)" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="Coordinates" Type="nvarchar(max)" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="CreatedDateOnUTC" Type="datetime" />
+          <Property Name="EditedDateOnUTC" Type="datetime" />
+          <Property Name="isDeleted" Type="bit" />
+          <Property Name="F_UserId" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <Association Name="FK_Delivery_Nuncio">
+          <End Role="Nuncio" Type="Self.Nuncio" Multiplicity="0..1" />
+          <End Role="Delivery" Type="Self.Delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nuncio">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Delivery">
+              <PropertyRef Name="F_NuncioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Delivery_Request">
+          <End Role="Request" Type="Self.Request" Multiplicity="1" />
+          <End Role="Delivery" Type="Self.Delivery" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Request">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Delivery">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Delivery_Station">
+          <End Role="Station" Type="Self.Station" Multiplicity="0..1" />
+          <End Role="Delivery" Type="Self.Delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Station">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Delivery">
+              <PropertyRef Name="F_StationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="F_ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Response_Request">
+          <End Role="Request" Type="Self.Request" Multiplicity="0..1" />
+          <End Role="Response" Type="Self.Response" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Request">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Response">
+              <PropertyRef Name="F_RequestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Response_Station">
+          <End Role="Station" Type="Self.Station" Multiplicity="0..1" />
+          <End Role="Response" Type="Self.Response" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Station">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Response">
+              <PropertyRef Name="F_StationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DeliveryDBModelStoreContainer">
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="11480_DaruveryUser" store:Type="Tables" />
+          <EntitySet Name="Delivery" EntityType="Self.Delivery" Schema="11480_DaruveryUser" store:Type="Tables" />
+          <EntitySet Name="Nuncio" EntityType="Self.Nuncio" Schema="11480_DaruveryUser" store:Type="Tables" />
+          <EntitySet Name="Request" EntityType="Self.Request" Schema="11480_DaruveryUser" store:Type="Tables" />
+          <EntitySet Name="Response" EntityType="Self.Response" Schema="11480_DaruveryUser" store:Type="Tables" />
+          <EntitySet Name="Station" EntityType="Self.Station" Schema="11480_DaruveryUser" store:Type="Tables" />
+          <AssociationSet Name="FK_Delivery_Nuncio" Association="Self.FK_Delivery_Nuncio">
+            <End Role="Nuncio" EntitySet="Nuncio" />
+            <End Role="Delivery" EntitySet="Delivery" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Delivery_Request" Association="Self.FK_Delivery_Request">
+            <End Role="Request" EntitySet="Request" />
+            <End Role="Delivery" EntitySet="Delivery" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Delivery_Station" Association="Self.FK_Delivery_Station">
+            <End Role="Station" EntitySet="Station" />
+            <End Role="Delivery" EntitySet="Delivery" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_Client" Association="Self.FK_Request_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Response_Request" Association="Self.FK_Response_Request">
+            <End Role="Request" EntitySet="Request" />
+            <End Role="Response" EntitySet="Response" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Response_Station" Association="Self.FK_Response_Station">
+            <End Role="Station" EntitySet="Station" />
+            <End Role="Response" EntitySet="Response" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DeliveryDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clients" EntityType="DeliveryDBModel.Client" />
+          <EntitySet Name="Deliveries" EntityType="DeliveryDBModel.Delivery" />
+          <EntitySet Name="Nuncios" EntityType="DeliveryDBModel.Nuncio" />
+          <EntitySet Name="Requests" EntityType="DeliveryDBModel.Request" />
+          <EntitySet Name="Responses" EntityType="DeliveryDBModel.Response" />
+          <EntitySet Name="Stations" EntityType="DeliveryDBModel.Station" />
+          <AssociationSet Name="FK_Request_Client" Association="DeliveryDBModel.FK_Request_Client">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="Request" EntitySet="Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Delivery_Nuncio" Association="DeliveryDBModel.FK_Delivery_Nuncio">
+            <End Role="Nuncio" EntitySet="Nuncios" />
+            <End Role="Delivery" EntitySet="Deliveries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Delivery_Request" Association="DeliveryDBModel.FK_Delivery_Request">
+            <End Role="Request" EntitySet="Requests" />
+            <End Role="Delivery" EntitySet="Deliveries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Delivery_Station" Association="DeliveryDBModel.FK_Delivery_Station">
+            <End Role="Station" EntitySet="Stations" />
+            <End Role="Delivery" EntitySet="Deliveries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Response_Request" Association="DeliveryDBModel.FK_Response_Request">
+            <End Role="Request" EntitySet="Requests" />
+            <End Role="Response" EntitySet="Responses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Response_Station" Association="DeliveryDBModel.FK_Response_Station">
+            <End Role="Station" EntitySet="Stations" />
+            <End Role="Response" EntitySet="Responses" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Boolean" />
+          <Property Name="CreatedDateOnUTC" Type="DateTime" Precision="3" />
+          <Property Name="EditedDateOnUTC" Type="DateTime" Precision="3" />
+          <Property Name="isDeleted" Type="Boolean" />
+          <Property Name="F_userId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RndValue" Type="String" MaxLength="6" FixedLength="true" Unicode="true" />
+          <Property Name="AndroidId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Requests" Relationship="DeliveryDBModel.FK_Request_Client" FromRole="Client" ToRole="Request" />
+        </EntityType>
+        <EntityType Name="Delivery">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="StationResponse" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NuncioResponse" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="F_NuncioId" Type="Int32" />
+          <Property Name="F_StationId" Type="Int32" />
+          <Property Name="CreatedDateOnUTC" Type="DateTime" Precision="3" />
+          <Property Name="SeenDateOnUTC" Type="DateTime" Precision="3" />
+          <Property Name="SendNuncioDateOnUTC" Type="DateTime" Precision="3" />
+          <Property Name="NuncioAtStationDateOnUTC" Type="DateTime" Precision="3" />
+          <Property Name="NuncioAtClientDateOnUTC" Type="DateTime" Precision="3" />
+          <Property Name="DeliveryIssue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Nuncio" Relationship="DeliveryDBModel.FK_Delivery_Nuncio" FromRole="Delivery" ToRole="Nuncio" />
+          <NavigationProperty Name="Request" Relationship="DeliveryDBModel.FK_Delivery_Request" FromRole="Delivery" ToRole="Request" />
+          <NavigationProperty Name="Station" Relationship="DeliveryDBModel.FK_Delivery_Station" FromRole="Delivery" ToRole="Station" />
+        </EntityType>
+        <EntityType Name="Nuncio">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NuncioName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Tell" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Coordinates" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Boolean" />
+          <Property Name="CreateddateOnUTC" Type="DateTime" Precision="3" />
+          <Property Name="EditDateOnUTC" Type="DateTime" Precision="3" />
+          <Property Name="isDeleted" Type="Boolean" />
+          <Property Name="F_UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Deliveries" Relationship="DeliveryDBModel.FK_Delivery_Nuncio" FromRole="Nuncio" ToRole="Delivery" />
+        </EntityType>
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Coordinates" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDateOnUTC" Type="DateTime" Precision="3" />
+          <Property Name="isDeleted" Type="Boolean" />
+          <Property Name="Price" Type="Double" />
+          <Property Name="F_ClientId" Type="Int32" />
+          <Property Name="TrackingCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="isSetteld" Type="Boolean" />
+          <NavigationProperty Name="Client" Relationship="DeliveryDBModel.FK_Request_Client" FromRole="Request" ToRole="Client" />
+          <NavigationProperty Name="Delivery" Relationship="DeliveryDBModel.FK_Delivery_Request" FromRole="Request" ToRole="Delivery" />
+          <NavigationProperty Name="Responses" Relationship="DeliveryDBModel.FK_Response_Request" FromRole="Request" ToRole="Response" />
+        </EntityType>
+        <EntityType Name="Response">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StationResponse" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClientResponse" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="F_StationId" Type="Int32" />
+          <Property Name="F_RequestId" Type="Int32" />
+          <Property Name="CreatedDateOnUTC" Type="DateTime" Precision="3" />
+          <Property Name="SeenDateOnUTC" Type="DateTime" Precision="3" />
+          <Property Name="ProcessingDateOnUTC" Type="DateTime" Precision="3" />
+          <Property Name="WaitingForClientDateOnUTC" Type="DateTime" Precision="3" />
+          <Property Name="ClientResponseDateOnUTC" Type="DateTime" Precision="3" />
+          <Property Name="StationRejectDateOnUTC" Type="DateTime" Precision="3" />
+          <Property Name="ResponseIssue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Request" Relationship="DeliveryDBModel.FK_Response_Request" FromRole="Response" ToRole="Request" />
+          <NavigationProperty Name="Station" Relationship="DeliveryDBModel.FK_Response_Station" FromRole="Response" ToRole="Station" />
+        </EntityType>
+        <EntityType Name="Station">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StaionName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Tell" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Coordinates" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Boolean" />
+          <Property Name="CreatedDateOnUTC" Type="DateTime" Precision="3" />
+          <Property Name="EditedDateOnUTC" Type="DateTime" Precision="3" />
+          <Property Name="isDeleted" Type="Boolean" />
+          <Property Name="F_UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Deliveries" Relationship="DeliveryDBModel.FK_Delivery_Station" FromRole="Station" ToRole="Delivery" />
+          <NavigationProperty Name="Responses" Relationship="DeliveryDBModel.FK_Response_Station" FromRole="Station" ToRole="Response" />
+        </EntityType>
+        <Association Name="FK_Request_Client">
+          <End Type="DeliveryDBModel.Client" Role="Client" Multiplicity="0..1" />
+          <End Type="DeliveryDBModel.Request" Role="Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="F_ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Delivery_Nuncio">
+          <End Type="DeliveryDBModel.Nuncio" Role="Nuncio" Multiplicity="0..1" />
+          <End Type="DeliveryDBModel.Delivery" Role="Delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nuncio">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Delivery">
+              <PropertyRef Name="F_NuncioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Delivery_Request">
+          <End Type="DeliveryDBModel.Request" Role="Request" Multiplicity="1" />
+          <End Type="DeliveryDBModel.Delivery" Role="Delivery" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Request">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Delivery">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Delivery_Station">
+          <End Type="DeliveryDBModel.Station" Role="Station" Multiplicity="0..1" />
+          <End Type="DeliveryDBModel.Delivery" Role="Delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Station">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Delivery">
+              <PropertyRef Name="F_StationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Response_Request">
+          <End Type="DeliveryDBModel.Request" Role="Request" Multiplicity="0..1" />
+          <End Type="DeliveryDBModel.Response" Role="Response" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Request">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Response">
+              <PropertyRef Name="F_RequestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Response_Station">
+          <End Type="DeliveryDBModel.Station" Role="Station" Multiplicity="0..1" />
+          <End Type="DeliveryDBModel.Response" Role="Response" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Station">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Response">
+              <PropertyRef Name="F_StationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DeliveryDBModelStoreContainer" CdmEntityContainer="DBEntities">
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="DeliveryDBModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="AndroidId" ColumnName="AndroidId" />
+                <ScalarProperty Name="RndValue" ColumnName="RndValue" />
+                <ScalarProperty Name="F_userId" ColumnName="F_userId" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="EditedDateOnUTC" ColumnName="EditedDateOnUTC" />
+                <ScalarProperty Name="CreatedDateOnUTC" ColumnName="CreatedDateOnUTC" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Deliveries">
+            <EntityTypeMapping TypeName="DeliveryDBModel.Delivery">
+              <MappingFragment StoreEntitySet="Delivery">
+                <ScalarProperty Name="DeliveryIssue" ColumnName="DeliveryIssue" />
+                <ScalarProperty Name="NuncioAtClientDateOnUTC" ColumnName="NuncioAtClientDateOnUTC" />
+                <ScalarProperty Name="NuncioAtStationDateOnUTC" ColumnName="NuncioAtStationDateOnUTC" />
+                <ScalarProperty Name="SendNuncioDateOnUTC" ColumnName="SendNuncioDateOnUTC" />
+                <ScalarProperty Name="SeenDateOnUTC" ColumnName="SeenDateOnUTC" />
+                <ScalarProperty Name="CreatedDateOnUTC" ColumnName="CreatedDateOnUTC" />
+                <ScalarProperty Name="F_StationId" ColumnName="F_StationId" />
+                <ScalarProperty Name="F_NuncioId" ColumnName="F_NuncioId" />
+                <ScalarProperty Name="NuncioResponse" ColumnName="NuncioResponse" />
+                <ScalarProperty Name="StationResponse" ColumnName="StationResponse" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Nuncios">
+            <EntityTypeMapping TypeName="DeliveryDBModel.Nuncio">
+              <MappingFragment StoreEntitySet="Nuncio">
+                <ScalarProperty Name="F_UserId" ColumnName="F_UserId" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="EditDateOnUTC" ColumnName="EditDateOnUTC" />
+                <ScalarProperty Name="CreateddateOnUTC" ColumnName="CreateddateOnUTC" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Coordinates" ColumnName="Coordinates" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Tell" ColumnName="Tell" />
+                <ScalarProperty Name="NuncioName" ColumnName="NuncioName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Requests">
+            <EntityTypeMapping TypeName="DeliveryDBModel.Request">
+              <MappingFragment StoreEntitySet="Request">
+                <ScalarProperty Name="isSetteld" ColumnName="isSetteld" />
+                <ScalarProperty Name="TrackingCode" ColumnName="TrackingCode" />
+                <ScalarProperty Name="F_ClientId" ColumnName="F_ClientId" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="CreatedDateOnUTC" ColumnName="CreatedDateOnUTC" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Coordinates" ColumnName="Coordinates" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Responses">
+            <EntityTypeMapping TypeName="DeliveryDBModel.Response">
+              <MappingFragment StoreEntitySet="Response">
+                <ScalarProperty Name="ResponseIssue" ColumnName="ResponseIssue" />
+                <ScalarProperty Name="StationRejectDateOnUTC" ColumnName="StationRejectDateOnUTC" />
+                <ScalarProperty Name="ClientResponseDateOnUTC" ColumnName="ClientResponseDateOnUTC" />
+                <ScalarProperty Name="WaitingForClientDateOnUTC" ColumnName="WaitingForClientDateOnUTC" />
+                <ScalarProperty Name="ProcessingDateOnUTC" ColumnName="ProcessingDateOnUTC" />
+                <ScalarProperty Name="SeenDateOnUTC" ColumnName="SeenDateOnUTC" />
+                <ScalarProperty Name="CreatedDateOnUTC" ColumnName="CreatedDateOnUTC" />
+                <ScalarProperty Name="F_RequestId" ColumnName="F_RequestId" />
+                <ScalarProperty Name="F_StationId" ColumnName="F_StationId" />
+                <ScalarProperty Name="ClientResponse" ColumnName="ClientResponse" />
+                <ScalarProperty Name="StationResponse" ColumnName="StationResponse" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stations">
+            <EntityTypeMapping TypeName="DeliveryDBModel.Station">
+              <MappingFragment StoreEntitySet="Station">
+                <ScalarProperty Name="F_UserId" ColumnName="F_UserId" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="EditedDateOnUTC" ColumnName="EditedDateOnUTC" />
+                <ScalarProperty Name="CreatedDateOnUTC" ColumnName="CreatedDateOnUTC" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Coordinates" ColumnName="Coordinates" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Tell" ColumnName="Tell" />
+                <ScalarProperty Name="StaionName" ColumnName="StaionName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,279 @@
+﻿@model DeliveryService.Models.ClientRequestDetailModel
+@{
+    Layout = "~/Areas/Admin3mill/Views/Shared/_Layout.cshtml";
+}
+@section CSS_Requested{
+
+    <link href="~/Content/AdminContent/vendor/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet" media="screen">
+    <link href="~/Content/AdminContent/vendor/select2/select2.min.css" rel="stylesheet" media="screen">
+    <link href="~/Content/AdminContent/vendor/bootstrap-datepicker/bootstrap-datepicker3.standalone.min.css" rel="stylesheet" media="screen">
+    <link href="~/Content/AdminContent/vendor/bootstrap-timepicker/bootstrap-timepicker.min.css" rel="stylesheet" media="screen">
+
+
+}
+@section js_Requested
+{
+    <script src="~/Content/AdminContent/vendor/maskedinput/jquery.maskedinput.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/autosize/autosize.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/selectFx/classie.js"></script>
+    <script src="~/Content/AdminContent/vendor/selectFx/selectFx.js"></script>
+    <script src="~/Content/AdminContent/vendor/select2/select2.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/Chart.js/Chart.min.js"></script>
+
+}
+
+@section js_Handler
+{
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAigjOSg1VbxQCNeFkQdDxf5t0-2ubADd4&callback=myMap"></script>
+    <script>
+        jQuery(document).ready(function () {
+            Main.init();
+        });
+        @{string Coordinate=Model.Coordinates;}
+        function myMap() {
+            var myCenter = new google.maps.LatLng(@Coordinate.Substring(0,Coordinate.IndexOf(',')), @Coordinate.Substring(Coordinate.IndexOf(',')+1));
+            var mapCanvas = document.getElementById("PipoMap");
+            var mapOptions = { center: myCenter, zoom: 14 };
+            var map = new google.maps.Map(mapCanvas, mapOptions);
+            var marker = new google.maps.Marker({ position: myCenter });
+            marker.setMap(map);
+        }
+    </script>
+}
+<div class="main-content">
+    <div class="wrap-content container" id="container">
+        <!-- start: PAGE TITLE -->
+        @Html.Partial("PageTittle")
+        <!-- end: PAGE TITLE -->
+        <!-- start: BASIC EXAMPLE -->
+        <div class="container-fluid container-fullw bg-white">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row margin-top-30">
+                        <div class="col-lg-6 col-md-12">
+                            <fieldset>
+                                <legend style="font-family: PipoFont;">
+                                    اطلاعات سفارش
+                                </legend>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">
+                                        @Html.DisplayNameFor(model => model.RequestId):
+                                        @Html.DisplayFor(model => model.RequestId)
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">
+                                        @Html.DisplayNameFor(model => model.TrackingCode):
+                                        @Html.DisplayFor(model => model.TrackingCode)
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">
+                                        @Html.DisplayNameFor(model => model.Address):
+                                        @Html.DisplayFor(model => model.Address)
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">
+                                        @Html.DisplayNameFor(model => model.Price):
+                                        @Html.DisplayFor(model => model.Price)
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">
+                                        @Html.DisplayNameFor(model => model.Status):
+                                        @Html.DisplayFor(model => model.Status)
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">
+                                        @Html.DisplayNameFor(model => model.IsSetted):
+                                        @Html.DisplayFor(model => model.IsSetted)
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">
+                                        @Html.DisplayNameFor(model => model.RequestCreateDateOnUtc):
+                                        @if (Model.RequestCreateDateOnUtc != null)
+                                        {
+                                        @Html.Label(DeliveryService.Areas.Admin3mill.Models.Tools.GetDateTimeReturnJalaliDate(Model.RequestCreateDateOnUtc ?? default(DateTime)), new { style = "direction: ltr;" })
+                                        }
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">
+                                        @Html.DisplayName("تصویر سفارش"):
+                                        <a onclick="window.open('@Model.Img','mywin','width=1000,height =800')"><img src="@Model.Img" class="img-responsive" style="height:250px;margin-top: 15px;" /></a>
+                                    </label>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-6 col-md-12">
+                            <fieldset>
+                                <legend style="font-family: PipoFont;">
+                                    موقعیت جغرافیایی
+                                </legend>
+
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">
+                                        @Html.DisplayName("موقعیت جغرافیایی سفارش"):
+                                    </label>
+                                    <div class="row">
+                                        <div id="PipoMap" class="col-lg-12" style="height:525px;margin-top:15px;"></div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-12 col-md-12">
+                            <fieldset>
+                                <legend style="font-family: PipoFont;">
+                                    جزئیات ارسال سفارش و پیک
+                                </legend>
+                                @if (Model.HaveNuncio)
+                                {
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">
+                                        @Html.DisplayNameFor(model => model.NuncioName):
+                                        @Html.DisplayFor(model => model.NuncioName)
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">
+                                        @Html.DisplayNameFor(model => model.NuncioOwnerCompleteName):
+                                        @Html.DisplayFor(model => model.NuncioOwnerCompleteName)
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">
+                                        @Html.DisplayNameFor(model => model.NuncioTell):
+                                        @Html.DisplayFor(model => model.NuncioTell)
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">
+                                        @Html.DisplayNameFor(model => model.NuncioAddress):
+                                        @Html.DisplayFor(model => model.NuncioAddress)
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">
+                                        @Html.DisplayNameFor(model => model.DeliveryIssue):
+                                        @Html.DisplayFor(model => model.DeliveryIssue)
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">
+                                        @Html.DisplayNameFor(model => model.DeliveryCreateDateOnUtc):
+                                        @if (Model.DeliveryCreateDateOnUtc != null)
+                                            {
+                                            @Html.Label(DeliveryService.Areas.Admin3mill.Models.Tools.GetDateTimeReturnJalaliDate(Model.DeliveryCreateDateOnUtc ?? default(DateTime)), new { style = "direction: ltr;" })
+                                            }
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">
+                                        @Html.DisplayNameFor(model => model.SendNuncioDateOnUTC):
+                                        @if (Model.SendNuncioDateOnUTC != null)
+                                            {
+                                            @Html.Label(DeliveryService.Areas.Admin3mill.Models.Tools.GetDateTimeReturnJalaliDate(Model.SendNuncioDateOnUTC ?? default(DateTime)), new { style = "direction: ltr;" })
+                                            }
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">
+                                        @Html.DisplayNameFor(model => model.DeliverySeenDateOnUTC):
+                                        @if (Model.DeliverySeenDateOnUTC != null)
+                                            {
+                                            @Html.Label(DeliveryService.Areas.Admin3mill.Models.Tools.GetDateTimeReturnJalaliDate(Model.DeliverySeenDateOnUTC ?? default(DateTime)), new { style = "direction: ltr;" })
+                                            }
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">
+                                        @Html.DisplayNameFor(model => model.NuncioAtStationDateOnUTC):
+                                        @if (Model.NuncioAtStationDateOnUTC != null)
+                                            {
+                                            @Html.Label(DeliveryService.Areas.Admin3mill.Models.Tools.GetDateTimeReturnJalaliDate(Model.NuncioAtStationDateOnUTC ?? default(DateTime)), new { style = "direction: ltr;" })
+                                            }
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">
+                                        @Html.DisplayNameFor(model => model.NuncioAtClientDateOnUTC):
+                                        @if (Model.NuncioAtClientDateOnUTC != null)
+                                            {
+                                            @Html.Label(DeliveryService.Areas.Admin3mill.Models.Tools.GetDateTimeReturnJalaliDate(Model.NuncioAtClientDateOnUTC ?? default(DateTime)), new { style = "direction: ltr;" })
+                                            }
+                                    </label>
+                                </div>
+                                }
+                                else
+                                {
+                                <div class="form-group" style="text-align:center;">
+                                    <label for="exampleInputEmail1" style=" margin-top: 20px;font-size: 20px;color: #c61616;">
+                                        تاکنون جهت تحویل به مشتری اقدامی حاصل نشده !
+                                    </label>
+                                </div>
+                                }
+                            </fieldset>
+
+                        </div>
+                        <div class="col-lg-12 col-md-12">
+                            <fieldset>
+                                <legend style="font-family: PipoFont;">
+                                    لیست مراکزی که درخواست به آن ها ارجاع داده شده
+                                </legend>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover" id="sample-table-1">
+                                        <thead>
+                                            <tr>
+                                                <th class="center">@Html.DisplayName("نام مرکز")</th>
+                                                <th class="center">@Html.DisplayName("زمان رد شدن درخواست")</th>
+                                                <th class="center">@Html.DisplayName("زمان رویت درخواست")</th>
+                                                <th class="center">@Html.DisplayName("زمان پردازش درخواست")</th>
+                                                <th class="center">@Html.DisplayName("زمان انتظار برای پاسخ کاربر")</th>
+                                                <th class="center">@Html.DisplayName("زمان پاسخ کاربر")</th>
+                                                <th class="center">@Html.DisplayName("وضعیت")</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.Responses)
+                                            {
+                                            <tr>
+                                                <td class="center">@item.StationName</td>
+                                                <td class="center" style="direction:ltr;">@item.RejectDateOnUtc</td>
+                                                <td class="center" style="direction:ltr;">@item.SeenDateOnUTC</td>
+                                                <td class="center" style="direction:ltr;">@item.ProcessingDateOnUTC</td>
+                                                <td class="center" style="direction:ltr;">@item.WaitingForClientDateOnUTC</td>
+                                                <td class="center" style="direction:ltr;">@item.ClientResponseDateOnUTC</td>
+                                                @if (item.StationResponse == "OK")
+                                                    {
+                                                <td class="center"><span class="label label-sm label-success">تایید شده</span></td>
+                                                    }
+                                                    else if (item.StationResponse == "Rejected")
+                                                    {
+                                                <td class="center"><span class="label label-sm label-danger">رد شده</span></td>
+                                                    }
+                                                    else
+                                                    {
+                                                <td class="center"><span class="label label-sm label-warning">در حال بررسی</span></td>
+                                                    }
+                                            </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end: BASIC TABLE -->
+    </div>
+</div>
+
+

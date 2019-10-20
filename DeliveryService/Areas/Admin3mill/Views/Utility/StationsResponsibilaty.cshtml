@@ -1,0 +1,48 @@
+﻿@model IEnumerable<DeliveryService.Models.ChartModel>
+@{
+    Layout = null;
+}
+@using DeliveryService.Infrastructure;
+
+@if (Model != null && Model.Count() > 0)
+{
+    List<string[]>
+        myresult = new List<string[]>();
+    int s = 1;
+    foreach (var item in Model)
+    {
+        string[] temp = new string[4];
+        temp[1] = item.Value.ToString();
+        if (item.Text == "1")
+        {
+            temp[2] = "#0d940c";
+            temp[0] = "تایید شده";
+        }
+        else if (item.Text == "2")
+        {
+            temp[2] = "#b92b12";
+            temp[0] = "رد شده";
+        }
+        else
+        {
+            temp[2] = "#eda229";
+            temp[0] = "در حال بررسی";
+        }
+        s = s + 1;
+        temp[3] = "#6C7A89";
+        myresult.Add(temp);
+    }
+    this.ViewContext.HttpContext.Items["piporesult"] = myresult;
+    <fieldset>
+        <div class="col-lg-12 col-md-12 col-sm-12 sidebar">
+            <div class="sidebar-box white featured-video" style="opacity: 1;">
+                <h3 class="col-title" style="margin-bottom:70px;">@Resource.Resource.StationsResponsibilaty</h3>
+                <span class="liner" style="width:91%;"></span>
+                <div class="text-center">
+                    <canvas id="pieChart" class="full-width" style="height: 150px;float: left;margin-top: -25px;margin-bottom: 50px;"></canvas>
+                    <div id="pieLegend" style="margin-top: 10px;margin-top: 10px;text-align: right;"></div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+}
